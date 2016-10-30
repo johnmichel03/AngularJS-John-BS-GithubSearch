@@ -1,0 +1,16 @@
+{
+    "name": "John-bs-search-github",
+    "description": "Github search project",
+    "version": "0.0.0",
+    "homepage": "https://github.com/johnmichel03/Angular-John-BS-GithubSearch",
+    "license": "MIT",
+    "private": false,
+    "dependencies": {
+        "angular": "~1.5.0",
+        "angular-route": "~1.5.0",
+        "angular-loader": "~1.5.0",
+        "angular-mocks": "~1.5.0",
+        "html5-boilerplate": "^5.3.0",
+        "angular-ui-bootstrap": "^2.2.0"
+    }
+}
