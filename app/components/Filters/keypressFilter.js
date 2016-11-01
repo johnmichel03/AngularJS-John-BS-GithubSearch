@@ -1,4 +1,4 @@
-angular.module('Github.CommonFilters').directive('dlKeyCode', dlKeyCode);
+angular.module('Github.CommonFilters', []).directive('dlKeyCode', dlKeyCode);
 
 function dlKeyCode() {
     return {

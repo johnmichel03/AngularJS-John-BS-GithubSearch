@@ -1,12 +1,12 @@
-<div ng-cloak="" class="container-fluid">
+<div class="container-fluid" data-ng-cloak>
     <div style="margin-top:60px;" class="panel panel-primary" ng-init="isCollapsed = false">
         <div class="panel-heading">
-            <div class="row">
+            <div>
                 <div>
-                    <label class="pull-left"> GitHub Search</label>
+                    <label> GitHub Search</label>
                 </div>
                 <div class="btn-toolbar pull-right" role="toolbar" aria-label="Toolbar with button groups">
-                    <div class="btn-group" role="group" aria-label="First group">
+                    <div class="btn-group icon-panel" role="group" aria-label="First group">
                         <a data-toggle="collapse" data-target="#collapseFilter" class="btn btn-primary" ng-click="isCollapsed = !isCollapsed">
                             <span class="glyphicon glyphicon-chevron-up" ng-show="!isCollapsed"></span>
                             <span class="glyphicon glyphicon-chevron-down" ng-show="isCollapsed"></span>
@@ -16,100 +16,57 @@
             </div>
         </div>
         <div class="panel-body collapse in" id="collapseFilter">
-            <div class="row">
-                <nav class="navbar navbar-default">
-                    <div class="nav navbar-nav">
-                        <form class="navbar-form" role="search">
-                            <div class="input-group">
-                                <div class="input-group-btn">
-                                    <select class="btn btn-primary" data-toggle="dropdown" data-ng-options="field.value as field.name for field in sortFilters" ng-model="searchModel.sort">
-                                        
-                                        <!--<option ng-repeat="field in sortFilters track by $index"  data-ng-model="searchModel.sort" >
-                                            <span class="label-icon">{{field.name}}</span>
-                                        </option>-->
-                                    </select>
-                                </div>
-                                <input type="text" class="form-control" ng-model="searchModel.q" code="13" dl-key-code="search();">
-                                <div class="input-group-btn">
-                                    <button type="button" class="btn btn-primary" data-ng-click="search();">GO</button>
-                                </div>
-                            </div>
-                        </form>
 
-                    </div>
-                </nav>
-            </div>
+            <nav class="navbar navbar-default">
+                <div class="nav navbar-nav">
+                    <form class="navbar-form" role="search">
+                        <div class="input-group md-col-12">
+                            <div class="input-group-btn md-col-2">
+                                <select class="btn btn-primary search-select" data-ng-options="field.value as field.name for field in orderByFilters" ng-model="searchModel.order"></select>
+                            </div>
+                            <div class="input-group-btn md-col-2">
+                                <select class="btn btn-primary search-select" data-toggle="dropdown" data-ng-options="field.value as field.name for field in sortFilters" ng-model="searchModel.sort"></select>
+                            </div>
+                            <input type="text" class="form-control md-col-7" ng-model="searchModel.q" code="13" dl-key-code="search();">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-primary md-col-1" data-ng-click="search();">GO</button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </nav>
+
         </div>
-        <div class="panel panel-default" ng-if="paginationModel.totalItems>0">
+        <div class="panel panel-default" ng-if="searchModel.pagination.totalItems>0">
             <div class="panel panel-heading">
-                <label>Total search results : {{paginationModel.totalItems}}</label>
+                <label>Total search results : {{searchModel.pagination.totalItems}}</label>
             </div>
             <div class="panel panel-body">
-                <!--<div class="row">-->
-                <div class="row">
-                    <div class="col-xs-1">URL</div>
-                    <div class="col-xs-8">description</div>
-                    <div class="col-xs-1">forks count</div>
-                    <div class="col-xs-1"> stargazers count</div>
-                    <div class="col-xs-1">open issues count</div>
-                </div>
-                <div class="row" ng-repeat="item in searchResult.items">
-                    <div class="col-xs-1 "><a href='' ng-click="showDetails(item.url) ">{{item.name}}</a></div>
-                    <div class="col-xs-8 ">{{item.description | filter:limitTo:30}}</div>
-                    <div class="col-xs-1 ">{{item.forks_count}}</div>
-                    <div class="col-xs-1 ">{{item.stargazers_count}}</div>
-                    <div class="col-xs-1 ">{{item.open_issues_count}}</div>
+                <div>
+                    <div ng-repeat="item in searchResult.items">
+                        <h3><a href='' ng-click="showDetails(item.url) ">{{item.full_name}}</a></h3>
+                        <div> <a href=''>{{item.url}}</a></div>
+                        <p>{{item.description}}</p>
+                        <div>
+
+                            <span aria-label="Forks Count">Forks Count : <strong>{{item.forks_count}}</strong></span>
+                            <span aria-label="Stargazers Forks Count"> <a href='' aria-label="Stargazers">
+                                <svg aria-hidden="true " height="16 " version="1.1 " viewBox="0 0 14 16 " width="14 "><path d="M14 6l-4.9-.64L7 1 4.9 5.36 0 6l3.6 3.26L2.67 14 7 11.67 11.33 14l-.93-4.74z "></path></svg> Stargazers Forks Count : <strong> {{item.stargazers_count}}</strong>
+                            </a></span>
+                            <span aria-label="Open Issues Count">Open Issues Count :<strong> {{item.open_issues_count}}</strong></span>
+                        </div>
+                        <hr>
+                    </div>
                 </div>
 
-                <!--</div>-->
-                <!--</div>-->
             </div>
 
             <div class="panel panel-footer ">
-                <ul uib-pagination ng-model="paginationModel.currentPage" ng-changed="search();" total-items="paginationModel.totalItems" items-per-page="paginationModel.itemsPerPage" max-size="5" boundary-links="true">
+                <ul uib-pagination ng-model="searchModel.pagination.currentPage" data-ng-changed="search();" data-ng-click="search();" total-items="searchModel.pagination.totalItems" items-per-page="searchModel.pagination.itemsPerPage" max-size="5" boundary-links="true">
                 </ul>
-
-
-                <pre>Page: {{paginationModel.currentPage}} / {{numPages}}</pre>
-                <!--<ul class="pagination ">
-                    <li><a href="# " ng-click=MoveNext(1)>1</a></li>
-                    <li><a href="# ">2</a></li>
-                    <li><a href="# ">3</a></li>
-                    <li><a href="# ">4</a></li>
-                    <li><a href="# ">5</a></li>
-                </ul>-->
+                <!--<pre>Page: {{searchModel.pagination.currentPage}}</pre>-->
             </div>
         </div>
     </div>
 </div>
-
-
-<li class="repo-list-item public source ">
-    <div class="repo-list-stats ">
-        Ruby
-
-        <a class="repo-list-stat-item tooltipped tooltipped-s " href="chef-cookbooks/windows/stargazers " aria-label="Stargazers ">
-            <svg aria-hidden="true " class="octicon octicon-star " height="16 " version="1.1 " viewBox="0 0 14 16 " width="14 "><path d="M14 6l-4.9-.64L7 1 4.9 5.36 0 6l3.6 3.26L2.67 14 7 11.67 11.33 14l-.93-4.74z "></path></svg> 174
-        </a>
-        <a class="repo-list-stat-item tooltipped tooltipped-s " href="chef-cookbooks/windows/network " aria-label="Forks ">
-            <svg aria-hidden="true " class="octicon octicon-git-branch " height="16 " version="1.1 " viewBox="0 0 10 16 " width="10 "><path d="M10 5c0-1.11-.89-2-2-2a1.993 1.993 0 0 0-1 3.72v.3c-.02.52-.23.98-.63 1.38-.4.4-.86.61-1.38.63-.83.02-1.48.16-2
-                .45V4.72a1.993 1.993 0 0 0-1-3.72C.88 1 0 1.89 0 3a2 2 0 0 0 1 1.72v6.56c-.59.35-1 .99-1 1.72 0 1.11.89 2 2 2 1.11 0 2-.89 2-2 0-.53-.2-1-.53-1.36.09-.06.48-.41.59-.47.25-.11.56-.17.94-.17 1.05-.05 1.95-.45 2.75-1.25S8.95 7.77 9 6.73h-.02C9.59
-                6.37 10 5.73 10 5zM2 1.8c.66 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2C1.35 4.2.8 3.65.8 3c0-.65.55-1.2 1.2-1.2zm0 12.41c-.66 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2zm6-8c-.66 0-1.2-.55-1.2-1.2 0-.65.55-1.2
-                1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2z "></path></svg> 226
-        </a>
-    </div>
-
-    <h3 class="repo-list-name ">
-        <a href="/chef-cookbooks/windows ">chef-cookbooks/<em>windows</em></a>
-
-    </h3>
-
-    <p class="repo-list-description ">
-        Development repository for Chef Cookbook <em>windows</em>
-    </p>
-
-    <p class="repo-list-meta ">
-        Updated
-        <relative-time datetime="2016-10-23T17:24:25Z " title="Oct 23, 2016, 6:24 PM GMT+1 ">5 days ago</relative-time>
-    </p>
-</li>

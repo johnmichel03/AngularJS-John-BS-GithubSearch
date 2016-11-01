@@ -1,1 +1,0 @@
-var commonFilters = angular.module('Github.CommonFilters', []);

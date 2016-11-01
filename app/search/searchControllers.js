@@ -1,33 +1,54 @@
-'use strict';
+(function(angular) {
+    'use strict';
+    var searchControllers = angular.module('searchControllers', ['ui.bootstrap', 'hSweetAlert']);
 
-var searchControllers = angular.module('searchControllers', []);
+    searchControllers.controller('searchController', ['$scope', '$q', '$window', 'RepoService', 'sweet',
+        function($scope, $q, $window, repoService, sweetAlert) {
 
-searchControllers.controller('searchController', ['$scope', 'RepoService', function($scope, repoService) {
-    $scope.searchResult = { items: [], };
-    $scope.paginationModel = { currentPage: 1, itemsPerPage: 10, maxSize: 10, totalItems: 0 };
-    $scope.searchModel = { q: '', sort: '', order: 'desc' };
+            $scope.searchResult = { items: [] };
+            $scope.searchModel = {
+                q: '',
+                sort: '',
+                order: 'desc',
+                pagination: {
+                    currentPage: 1,
+                    itemsPerPage: 30,
+                    maxSize: 10,
+                    totalItems: 0
+                }
+            };
+            $scope.sortFilters = repoService.getSortByFilter();
+            $scope.orderByFilters = repoService.getOrderByFilter();
 
-    $scope.sortFilters = repoService.getSortFilter();
+            $scope.search = function() {
+                repoService.search($scope.searchModel).then(function(response) {
+                        $scope.searchModel.pagination.totalItems = response.data.total_count;
+                        $scope.searchResult.items = response.data.items;
+                    })
+                    .catch(function(ex) {
+                        $scope.searchModel.pagination.currentPage = 1;
+                    });
+            }
 
-    $scope.search = function() {
-        repoService.search($scope.searchModel).then(function(response) {
-            //$scope.searchResult.totalItems = response.data.total_count;
-            $scope.paginationModel.totalItems = response.data.total_count;
-            $scope.searchResult.items = response.data.items;
-        });
-    }
-
-    $scope.showDetails = function(url) {
-        if (!$window.confirm('Do you want to move away from this site???')) return;
-        $window.location = url;
-    }
-}]);
-
-
-
-var filters = angular.module('searchFiltersApp', [])
-    .filter('lettersLimit', function() {
-        return function(inputString, limitTo) {
-            return inputString.slice(0, limitTo);
+            $scope.showDetails = function(url) {
+                sweetAlert.show({
+                    title: 'Confirm',
+                    text: 'Do you want to move away from this site?',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#DD6B55',
+                    confirmButtonText: 'Yes',
+                    closeOnConfirm: true,
+                    closeOnCancel: true
+                }, function(isConfirm) {
+                    if (isConfirm) {
+                        $window.location = url;
+                    } else {
+                        return;
+                    }
+                });
+            }
         }
-    })
+
+    ]);
+})(window.angular);
