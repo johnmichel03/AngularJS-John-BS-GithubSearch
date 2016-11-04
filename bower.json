@@ -1,7 +1,7 @@
 {
-  "name": "John-bs-search-github",
+  "name": "john-bs-search-github",
   "description": "Github search project",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "homepage": "https://github.com/johnmichel03/Angular-John-BS-GithubSearch",
   "license": "MIT",
   "private": false,
@@ -13,6 +13,9 @@
     "html5-boilerplate": "^5.3.0",
     "angular-ui-bootstrap": "^2.2.0",
     "bootstrap": "^3.3.7",
-    "angular-sweetalert": "angular-h-sweetalert#^1.4.7"
+    "angular-sweetalert": "angular-h-sweetalert#^1.4.7",
+    "angular-loading-overlay": "^1.1.1",
+    "angular-material": "^1.1.1",
+    "angular-google-chart": "^0.1.0"
   }
 }

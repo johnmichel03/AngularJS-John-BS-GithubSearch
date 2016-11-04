@@ -5,7 +5,9 @@
         'ngRoute',
         'searchControllers',
         'searchServices',
-        'Github.CommonFilters'
+        'Github.CommonDirectives',
+        'ngMaterial'
+        //'Github.ReportApp.Directives'
     ]);
 
     searchApp.config(['$routeProvider', function($routeProvider) {
@@ -15,5 +17,11 @@
             })
             .otherwise({ redirectTo: '/search' });
     }]);
+
+    // searchApp.run(function(bsLoadingOverlayService) {
+    //     bsLoadingOverlayService.setGlobalConfig({
+    //         templateUrl: 'loading-overlay-template.html'
+    //     });
+    // });
 
 })(window.angular);

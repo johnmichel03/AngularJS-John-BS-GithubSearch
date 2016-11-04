@@ -1,72 +1,58 @@
 <div class="container-fluid" data-ng-cloak>
-    <div style="margin-top:60px;" class="panel panel-primary" ng-init="isCollapsed = false">
+    <div class="panel panel-primary panel-margin-top" ng-init="isCollapsed = false">
         <div class="panel-heading">
             <div>
-                <div>
-                    <label> GitHub Search</label>
+                <label> GitHub Search</label>
+            </div>
+            <div class="input-group">
+                <div class="input-group-btn hidden-xs">
+                    <select class="btn btn-primary search-select" data-ng-options="field.value as field.name for field in orderByFilters" ng-model="searchModel.order"></select>
                 </div>
-                <div class="btn-toolbar pull-right" role="toolbar" aria-label="Toolbar with button groups">
-                    <div class="btn-group icon-panel" role="group" aria-label="First group">
-                        <a data-toggle="collapse" data-target="#collapseFilter" class="btn btn-primary" ng-click="isCollapsed = !isCollapsed">
-                            <span class="glyphicon glyphicon-chevron-up" ng-show="!isCollapsed"></span>
-                            <span class="glyphicon glyphicon-chevron-down" ng-show="isCollapsed"></span>
-                        </a>
-                    </div>
+                <div class="input-group-btn hidden-xs">
+                    <select class="btn btn-primary search-select" data-toggle="dropdown" data-ng-options="field.value as field.name for field in sortFilters" ng-model="searchModel.sort"></select>
+                </div>
+                <input type="text" class="form-control " ng-model="searchModel.q" code="13" gt-key-code="search();">
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-primary " data-ng-click="search();">GO</button>
                 </div>
             </div>
-        </div>
-        <div class="panel-body collapse in" id="collapseFilter">
-
-            <nav class="navbar navbar-default">
-                <div class="nav navbar-nav">
-                    <form class="navbar-form" role="search">
-                        <div class="input-group md-col-12">
-                            <div class="input-group-btn md-col-2">
-                                <select class="btn btn-primary search-select" data-ng-options="field.value as field.name for field in orderByFilters" ng-model="searchModel.order"></select>
-                            </div>
-                            <div class="input-group-btn md-col-2">
-                                <select class="btn btn-primary search-select" data-toggle="dropdown" data-ng-options="field.value as field.name for field in sortFilters" ng-model="searchModel.sort"></select>
-                            </div>
-                            <input type="text" class="form-control md-col-7" ng-model="searchModel.q" code="13" dl-key-code="search();">
-                            <div class="input-group-btn">
-                                <button type="button" class="btn btn-primary md-col-1" data-ng-click="search();">GO</button>
-                            </div>
-                        </div>
-                    </form>
-
-                </div>
-            </nav>
-
         </div>
         <div class="panel panel-default" ng-if="searchModel.pagination.totalItems>0">
-            <div class="panel panel-heading">
-                <label>Total search results : {{searchModel.pagination.totalItems}}</label>
+            <div class="panel search-result-header">
+                Total search results :
+                <stron> {{searchModel.pagination.totalItems}}</strong>
             </div>
+
             <div class="panel panel-body">
-                <div>
-                    <div ng-repeat="item in searchResult.items">
-                        <h3><a href='' ng-click="showDetails(item.url) ">{{item.full_name}}</a></h3>
-                        <div> <a href=''>{{item.url}}</a></div>
+                <ul class="article">
+                    <li ng-repeat="item in searchResult.items | filter:searchModel.sort | orderBy:full_name:searchModel.order === 'desc'" class="thumbnail">
+                        <a href="" class="thumb">
+                            <img class="img-responsive img-circle img-thumbnail" ng-src="{{item.owner.avatar_url}}" alt="avatar image" />
+                        </a>
+                        <a href="" ng-click="showDetails(item.html_url)">{{item.full_name}}</a>
                         <p>{{item.description}}</p>
-                        <div>
-
-                            <span aria-label="Forks Count">Forks Count : <strong>{{item.forks_count}}</strong></span>
-                            <span aria-label="Stargazers Forks Count"> <a href='' aria-label="Stargazers">
-                                <svg aria-hidden="true " height="16 " version="1.1 " viewBox="0 0 14 16 " width="14 "><path d="M14 6l-4.9-.64L7 1 4.9 5.36 0 6l3.6 3.26L2.67 14 7 11.67 11.33 14l-.93-4.74z "></path></svg> Stargazers Forks Count : <strong> {{item.stargazers_count}}</strong>
+                        <div class="article-item-margin-top">
+                            <span class="article-item-padding"><a href="">Forks Count:<strong>{{item.forks_count}}</strong></a></span>
+                            <span class="article-item-padding"><a href="" aria-label="Stargazers">
+                                <!--<svg aria-hidden="true " height="16 " version="1.1 " viewBox="0 0 14 16 " width="14 "><path d="M14 6l-4.9-.64L7 1 4.9 5.36 0 6l3.6 3.26L2.67 14 7 11.67 11.33 14l-.93-4.74z "></path></svg> -->
+                                Stargazers:<strong>{{item.stargazers_count}}</strong>
                             </a></span>
-                            <span aria-label="Open Issues Count">Open Issues Count :<strong> {{item.open_issues_count}}</strong></span>
-                        </div>
-                        <hr>
-                    </div>
-                </div>
+                            <span><a href="">Open Issues:<strong>{{item.open_issues_count}}</strong></a></span>
+                            <md-button ng-click="showAdvanced($event);">
+                                <a href="" ng-aria="view report">View<span class="glyphicon glyphicon-stats"> </span><a>
+                            </md-button>
 
+                        </div>
+
+                    </li>
+                </ul>
             </div>
 
-            <div class="panel panel-footer ">
+            <div class="pagination-margin">
                 <ul uib-pagination ng-model="searchModel.pagination.currentPage" data-ng-changed="search();" data-ng-click="search();" total-items="searchModel.pagination.totalItems" items-per-page="searchModel.pagination.itemsPerPage" max-size="5" boundary-links="true">
                 </ul>
-                <!--<pre>Page: {{searchModel.pagination.currentPage}}</pre>-->
             </div>
+
         </div>
     </div>
 </div>

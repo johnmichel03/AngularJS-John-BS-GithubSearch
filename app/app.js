@@ -7,9 +7,9 @@
         'Github.Interceptors',
         'SearchApp',
         'searchControllers',
-        //'ReportApp',
-        'ReportControllers'
-    ])
+        'ReportControllers',
+        'ngMaterial'
+    ]);
 
     githubApp.config(['$locationProvider', '$routeProvider',
         function($locationProvider, $routeProvider) {
@@ -27,7 +27,7 @@
                 .otherwise({ redirectTo: '/search' });
         }
     ]);
-    
+
     githubApp.config(['$httpProvider', function($httpProvider) {
 
         $httpProvider.interceptors.push('logInterceptors');
@@ -35,4 +35,4 @@
 
     }]);
 
-})(window.angular)
+})(window.angular);
