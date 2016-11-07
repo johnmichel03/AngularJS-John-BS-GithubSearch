@@ -15,23 +15,6 @@
     margin-top: 60px;
 }
 
-
-/*.panel-default>.panel-heading {
-    color: white;
-    background-color: #337AB7;
-    border-color: #337AB7;
-}*/
-
-
-/*.navbar .navbar-search .dropdown-menu {
-    min-width: 25px;
-}*/
-
-
-/*.dropdown-menu .label-icon {
-    margin-left: 5px;
-}*/
-
 .btn-outline {
     background-color: transparent;
     color: inherit;
@@ -110,6 +93,10 @@ a {
     border-bottom: none;
     background-color: white;
     margin-top: 10px;
+}
+
+.margin-left-15px {
+    margin-left: 15px;
 }
 
 @media (min-width: 768px) {

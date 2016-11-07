@@ -1,56 +1,85 @@
 (function(angular) {
     'use strict';
-    var searchControllers = angular.module('searchControllers', ['ui.bootstrap', 'hSweetAlert', 'ngMaterial', 'Github.SearchApp.Directives']);
+    var searchControllers = angular.module('searchControllers', ['ui.bootstrap', 'hSweetAlert', 'ngMaterial', 'Github.SearchApp.Directives', 'googlechart']);
 
-    searchControllers.controller('searchController', ['$scope', '$q', '$window', 'RepoService', 'sweet', '$mdDialog',
-        function($scope, $q, $window, repoService, sweetAlert, $mdDialog) {
+    searchControllers
+        .directive('searchResult', function() {
+            return {
+                restrict: 'E',
+                scope: {
+                    searchResult: '=',
+                    searchModel: '=',
+                    // showStatusReport: '&',
+                    selectedIndex: '='
+                },
+                templateUrl: 'search/partials/searchview-template.html',
+                controller: ['$scope', '$window', '$mdDialog', function($scope, $window, $mdDialog) {
 
-            // var data = google.visualization.arrayToDataTable([
-            //     ['Element', 'Density', { role: 'style' }],
-            //     ['Copper', 8.94, '#b87333'], // RGB value
-            //     ['Silver', 10.49, 'silver'], // English color name
-            //     ['Gold', 19.30, 'gold'],
-            //     ['Platinum', 21.45, 'color: #e5e4e2'], // CSS-style declaration
-            // ]);
+                    $scope.showDetails = function(url) {
+                        $window.open(url);
+                    }
+
+                    $scope.showStatusReport = function(ev, index) {
+                        $mdDialog.show({
+                            controller: DialogController,
+                            templateUrl: 'search/partials/reportview-template.html',
+                            parent: angular.element(document.body),
+                            targetEvent: ev,
+                            clickOutsideToClose: true,
+                            fullscreen: $scope.customFullscreen, // Only for -xs, -sm breakpoints.
+                            locals: {
+                                item: $scope.searchResult.items[index]
+                            }
+                        })
+                    };
 
 
-            $scope.name = 'john michel 123455';
+                    function DialogController($scope, $mdDialog, item) {
 
-            //  $scope.reportData.name = 'john michel 123455';
+                        var statusReportChart = {};
+                        statusReportChart.type = "PieChart";
+                        statusReportChart.data = [
+                            ['Category', 'Issue Count']
+                        ];
+                        statusReportChart.data.push(['Forks', item.forks_count]);
+                        statusReportChart.data.push(['Stargazers', item.stargazers_count]);
+                        statusReportChart.data.push(['Open Issues', item.open_issues_count]);
+                        statusReportChart.data.push(['Watchers', item.watchers_count]);
+                        statusReportChart.options = {
+                            displayExactValues: false,
+                            is3D: true,
+                            chartArea: { left: 30, top: 10, bottom: 0, height: "100%" }
+                        };
+
+                        $scope.chart = statusReportChart;
+                        $scope.hide = $mdDialog.hide;
+                        $scope.cancel = $mdDialog.cancel;
+                        // $scope.answer = function(answer) {
+                        //     $mdDialog.hide(answer);
+                        // };
+                    }
+
+                    DialogController.$inject = ['$scope', '$mdDialog', 'item'];
+                }]
+            };
+        });
+
+    searchControllers.controller('searchController', ['$scope', 'RepoService', 'sweet', '$mdDialog', '$timeout',
+        function($scope, repoService, sweetAlert, $mdDialog, $timeout) {
 
             resetSearchCriteria();
             $scope.sortFilters = repoService.getSortByFilter();
             $scope.orderByFilters = repoService.getOrderByFilter();
-
+            $scope.reportData = [];
             $scope.search = function() {
-                //  bsLoadingOverlayService.start();
                 repoService.search($scope.searchModel).then(function(response) {
                         $scope.searchModel.pagination.totalItems = response.data.total_count;
                         $scope.searchResult.items = response.data.items;
-                        // bsLoadingOverlayService.stop();
                     })
                     .catch(function(ex) {
-                        resetSearchCriteria();
+                        // resetSearchCriteria();
+                        $scope.searchModel.pagination.currentPage = 1;
                     });
-            };
-
-            $scope.showDetails = function(url) {
-                sweetAlert.show({
-                    title: 'Confirm',
-                    text: 'Do you want to move away from this site?',
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#DD6B55',
-                    confirmButtonText: 'Yes',
-                    closeOnConfirm: true,
-                    closeOnCancel: true
-                }, function(isConfirm) {
-                    if (isConfirm) {
-                        $window.location = url;
-                    } else {
-                        return;
-                    }
-                });
             };
 
             function resetSearchCriteria() {
@@ -66,46 +95,6 @@
                         maxSize: 10,
                         totalItems: 0
                     }
-                };
-            }
-
-
-
-            $scope.status = '';
-            $scope.customFullscreen = false;
-
-            $scope.showAdvanced = function(ev) {
-                $mdDialog.show({
-                        controller: DialogController,
-                        templateUrl: 'search/partials/reportview-template.html', // 'dialog1.tmpl.html',
-                        parent: angular.element(document.body),
-                        targetEvent: ev,
-                        clickOutsideToClose: true,
-                        fullscreen: $scope.customFullscreen, // Only for -xs, -sm breakpoints.
-                        locals: {
-                            items: $scope.searchResult.items
-                        }
-                    })
-                    // .then(function(answer) {
-                    //     $scope.status = 'You said the information was "' + answer + '".';
-                    // }, function() {
-                    //     $scope.status = 'You cancelled the dialog.';
-                    // });
-            };
-
-            function DialogController($scope, $mdDialog, items) {
-                $scope.items = items;
-
-                $scope.hide = function() {
-                    $mdDialog.hide();
-                };
-
-                $scope.cancel = function() {
-                    $mdDialog.cancel();
-                };
-
-                $scope.answer = function(answer) {
-                    $mdDialog.hide(answer);
                 };
             }
 

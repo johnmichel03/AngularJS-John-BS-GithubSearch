@@ -9,6 +9,7 @@
         'searchControllers',
         'ReportControllers',
         'ngMaterial'
+        //'IssueControllers'
     ]);
 
     githubApp.config(['$locationProvider', '$routeProvider',
@@ -24,15 +25,17 @@
                     templateUrl: 'report/partials/reportindex.html',
                     controller: 'reportController'
                 })
+                // .when('/issue', {
+                //     templateUrl: 'issue/partials/issue-index.html',
+                //     controller: 'IssueController'
+                // })
                 .otherwise({ redirectTo: '/search' });
         }
     ]);
 
     githubApp.config(['$httpProvider', function($httpProvider) {
-
         $httpProvider.interceptors.push('logInterceptors');
         $httpProvider.interceptors.push('responseInterceptor');
-
     }]);
 
 })(window.angular);

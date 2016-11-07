@@ -11,7 +11,7 @@
                 <div class="input-group-btn hidden-xs">
                     <select class="btn btn-primary search-select" data-toggle="dropdown" data-ng-options="field.value as field.name for field in sortFilters" ng-model="searchModel.sort"></select>
                 </div>
-                <input type="text" class="form-control " ng-model="searchModel.q" code="13" gt-key-code="search();">
+                <input type="text" ng-focus="this.select();" class="form-control " ng-model="searchModel.q" code="13" gt-key-code="search();">
                 <div class="input-group-btn">
                     <button type="button" class="btn btn-primary " data-ng-click="search();">GO</button>
                 </div>
@@ -19,37 +19,18 @@
         </div>
         <div class="panel panel-default" ng-if="searchModel.pagination.totalItems>0">
             <div class="panel search-result-header">
-                Total search results :
-                <stron> {{searchModel.pagination.totalItems}}</strong>
+                <h3 class="margin-left-15px">We’ve found
+                    <strong> {{searchModel.pagination.totalItems}}</strong> repository results
+                </h3>
             </div>
 
             <div class="panel panel-body">
-                <ul class="article">
-                    <li ng-repeat="item in searchResult.items | filter:searchModel.sort | orderBy:full_name:searchModel.order === 'desc'" class="thumbnail">
-                        <a href="" class="thumb">
-                            <img class="img-responsive img-circle img-thumbnail" ng-src="{{item.owner.avatar_url}}" alt="avatar image" />
-                        </a>
-                        <a href="" ng-click="showDetails(item.html_url)">{{item.full_name}}</a>
-                        <p>{{item.description}}</p>
-                        <div class="article-item-margin-top">
-                            <span class="article-item-padding"><a href="">Forks Count:<strong>{{item.forks_count}}</strong></a></span>
-                            <span class="article-item-padding"><a href="" aria-label="Stargazers">
-                                <!--<svg aria-hidden="true " height="16 " version="1.1 " viewBox="0 0 14 16 " width="14 "><path d="M14 6l-4.9-.64L7 1 4.9 5.36 0 6l3.6 3.26L2.67 14 7 11.67 11.33 14l-.93-4.74z "></path></svg> -->
-                                Stargazers:<strong>{{item.stargazers_count}}</strong>
-                            </a></span>
-                            <span><a href="">Open Issues:<strong>{{item.open_issues_count}}</strong></a></span>
-                            <md-button ng-click="showAdvanced($event);">
-                                <a href="" ng-aria="view report">View<span class="glyphicon glyphicon-stats"> </span><a>
-                            </md-button>
-
-                        </div>
-
-                    </li>
-                </ul>
+                <search-result search-result="searchResult" " search-model="searchModel " ></search-result>
             </div>
 
-            <div class="pagination-margin">
-                <ul uib-pagination ng-model="searchModel.pagination.currentPage" data-ng-changed="search();" data-ng-click="search();" total-items="searchModel.pagination.totalItems" items-per-page="searchModel.pagination.itemsPerPage" max-size="5" boundary-links="true">
+            <div class="pagination-margin ">
+                <ul uib-pagination ng-model="searchModel.pagination.currentPage " data-ng-changed="search(); " data-ng-click="search(); " total-items="searchModel.pagination.totalItems " items-per-page="searchModel.pagination.itemsPerPage
+                    " max-size="5 " boundary-links="true ">
                 </ul>
             </div>
 

@@ -1,0 +1,21 @@
+<!--<pre>{{searchResult}}</pre>-->
+<ul class="article">
+    <li ng-repeat="item in searchResult.items | filter:searchModel.sort | orderBy:full_name:searchModel.order === 'desc' " class="thumbnail">
+        <a class="thumb">
+            <img class="img-responsive img-circle img-thumbnail" ng-src="{{item.owner.avatar_url}}" alt="avatar image" />
+        </a>
+        <h4> <a href="" ng-click="showDetails(item.html_url)">{{item.full_name}}</a></h4>
+        <p>{{item.description}}</p>
+        <div>
+            <span class="article-item-padding"> <md-tooltip>Forks Count</md-tooltip>Forks Count:<strong>{{item.forks_count}}</strong></span>
+            <span class="article-item-padding">Stargazers:<strong>{{item.stargazers_count}}</strong></span>
+            <span>Open Issues:<strong>{{item.open_issues_count}}</strong></span>
+            <a href="" ng-click="showStatusReport($event,$index);" ng-aria="view report">
+                <md-tooltip>View Report</md-tooltip>View<span class="glyphicon glyphicon-stats"> </span>
+                <a>
+                    <span class="article-item-padding" ng-if="item.has_issues"><a href="#!/issue"><md-tooltip>View Issue Details</md-tooltip><span class="glyphicon glyphicon-exclamation-sign"></span></a>
+                </span>
+        </div>
+
+    </li>
+</ul>

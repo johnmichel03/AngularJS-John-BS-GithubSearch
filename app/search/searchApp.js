@@ -6,14 +6,18 @@
         'searchControllers',
         'searchServices',
         'Github.CommonDirectives',
-        'ngMaterial'
-        //'Github.ReportApp.Directives'
+        'ngMaterial',
+        'IssueControllers'
     ]);
 
     searchApp.config(['$routeProvider', function($routeProvider) {
         $routeProvider.when('/search', {
                 templateUrl: 'search/partials/searchindex.html',
                 controller: 'searchController'
+            })
+            .when('/issue', {
+                templateUrl: 'issue/partials/issue-index.html',
+                controller: 'IssueController'
             })
             .otherwise({ redirectTo: '/search' });
     }]);
