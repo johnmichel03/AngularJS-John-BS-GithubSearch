@@ -13,13 +13,12 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bower_components/angular-material/angular-material.min.css">
+    <link rel="stylesheet" href="/bower_components/sweetalert/dist/sweetalert.css">
 
-    <link rel="stylesheet" href="https://cdn.gitcdn.link/cdn/angular/bower-material/v1.1.1/angular-material.css">
-    <link rel="stylesheet" href="bower_components/sweetalert/dist/sweetalert.css">
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-    <!--script:PackCss -->
     <link rel="stylesheet" href="css/app.css">
-    <!--script:PackCss -->
+
 </head>
 
 <body>
@@ -33,18 +32,16 @@
                     <span class="icon-bar"></span>
                     <!--<span class="glyphicon glyphicon-menu-hamburger"></span>-->
                 </button>
-                <div class="navbar-brand"><span>GitHub Repository</span> </div>
+                <div class="navbar-brand"><a href="#!/"><span class="glyphicon glyphicon-home"></span> GitHub Repository</a></div>
             </div>
             <div id="toggleMenuItems" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <!--<li><a href="#/">Login</a></li>
-                    <li><a href="#/register">Register</a></li>-->
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#!/search"><span class="glyphicon glyphicon-search"></span> Search</a></li>
                     <li><a href="#!/report"><span class="glyphicon glyphicon-stats"></span> Report</a></li>
-                    <li><a href="#!/view1"><span class="glyphicon glyphicon-user"></span> Login</a></li>
-                    <li><a href="#!/view2"><span class="glyphicon glyphicon-log-in"></span> Register</a></li>
+                    <li><a href="#!/search"><span class="glyphicon glyphicon-user"></span> Login</a></li>
+                    <li><a href="#!/search"><span class="glyphicon glyphicon-log-in"></span> Register</a></li>
                 </ul>
             </div>
         </div>
@@ -54,46 +51,38 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
 
-    <div data-ng-view>
-        <div bs-loading-overlay>
-        </div>
-    </div>
+    <div data-ng-view></div>
+    <!--<div bs-loading-overlay>
+        </div>-->
 
+    <!--<footer class="navbar-fixed-bottom pull-right">Copyright © JohnMichel.com</footer>-->
 
-
-    <!--<img src="images/Loading_icon.gif" tooltip="loading...">sdsdsd</img>-->
-
-    <!-- In production use:
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
-  -->
-    <script src="bower_components/jquery/dist/jquery.min.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/bower_components/angular/angular.min.js"></script>
     <!--<script src="bower_components/angular-loading-overlay/dist/angular-loading-overlay.js"></script>-->
-    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
-    <script src="bower_components/angular-aria/angular-aria.min.js"></script>
-    <script src="bower_components/angular-messages/angular-messages.min.js"></script>
+    <script src="/bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="/bower_components/angular-aria/angular-aria.min.js"></script>
+    <script src="/bower_components/angular-messages/angular-messages.min.js"></script>
     <!-- Angular Material Library -->
-    <script src="bower_components/angular-material/angular-material.min.js"></script>
-    <script src="bower_components/angular-google-chart/ng-google-chart.min.js"></script>
-    <!--<script src="https://www.gstatic.com/charts/loader.js"></script>-->
-    <script src="bower_components/angular-route/angular-route.min.js"></script>
+    <script src="/bower_components/angular-material/angular-material.min.js"></script>
+    <script src="/bower_components/angular-google-chart/ng-google-chart.min.js"></script>
+    <script src="/bower_components/angular-route/angular-route.min.js"></script>
 
-    <!-- pagination -->
+    <!-- sweet alert box  -->
+    <script src="/bower_components/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="/bower_components/angular-sweetalert/dist/ngSweetAlert.min.js"></script>
+
+    <!-- CDN :  pagination -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.1.4/ui-bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.1.4/ui-bootstrap-tpls.min.js"></script>
 
-    <!-- alert box  -->
-    <script src="bower_components/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="bower_components/angular-sweetalert/dist/ngSweetAlert.min.js"></script>
 
-    <!-- script:PackJs -->
+    <!-- build:js -->
     <script src="app.js"></script>
     <script src="common_services/interceptors.js"></script>
+    <script src="common_services/appConfigServices.js"></script>
     <script src="components/directives/commonDirectives.js"></script>
-    <script src="components/version/version.js"></script>
-    <script src="components/version/version-directive.js"></script>
-    <script src="components/version/interpolate-filter.js"></script>
     <script src="search/reportDirective.js"></script>
     <script src="search/searchApp.js"></script>
     <script src="search/searchServices.js"></script>
@@ -102,7 +91,8 @@
     <script src="report/reportServices.js"></script>
     <script src="report/reportControllers.js"></script>
     <script src="issue/issueControllers.js"></script>
-    <!-- script:PackJs -->
+    <script src="issue/issueServices.js"></script>
+    <!-- endbuild -->
 
 </body>
 

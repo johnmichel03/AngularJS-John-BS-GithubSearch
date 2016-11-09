@@ -1,6 +1,7 @@
 (function(angular) {
-    var reportDirectives = angular.module('Github.SearchApp.Directives', []);
+    'use strict';
 
+    var reportDirectives = angular.module('Github.SearchApp.Directives', []);
     reportDirectives.directive('issueReportgraph', issueReportGraph);
 
     function issueReportGraph() {
@@ -9,7 +10,7 @@
                 reportData: '='
             },
             templateUrl: 'search/partials/reportview-template.html'
-        }
-    };
-
+        };
+    }
+    
 })(window.angular);

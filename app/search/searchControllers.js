@@ -17,7 +17,7 @@
 
                     $scope.showDetails = function(url) {
                         $window.open(url);
-                    }
+                    };
 
                     $scope.showStatusReport = function(ev, index) {
                         $mdDialog.show({
@@ -30,12 +30,12 @@
                             locals: {
                                 item: $scope.searchResult.items[index]
                             }
-                        })
+                        });
                     };
 
 
                     function DialogController($scope, $mdDialog, item) {
-
+                        //can be configured as general report  by passing required chart configuration
                         var statusReportChart = {};
                         statusReportChart.type = "PieChart";
                         statusReportChart.data = [
@@ -54,9 +54,6 @@
                         $scope.chart = statusReportChart;
                         $scope.hide = $mdDialog.hide;
                         $scope.cancel = $mdDialog.cancel;
-                        // $scope.answer = function(answer) {
-                        //     $mdDialog.hide(answer);
-                        // };
                     }
 
                     DialogController.$inject = ['$scope', '$mdDialog', 'item'];
@@ -64,14 +61,20 @@
             };
         });
 
-    searchControllers.controller('searchController', ['$scope', 'RepoService', 'sweet', '$mdDialog', '$timeout',
-        function($scope, repoService, sweetAlert, $mdDialog, $timeout) {
+    searchControllers.controller('searchController', ['$scope', 'RepoService', 'sweet', '$mdDialog', '$timeout', '$mdToast',
+
+        function($scope, repoService, sweetAlert, $mdDialog, $timeout, $mdToast) {
 
             resetSearchCriteria();
             $scope.sortFilters = repoService.getSortByFilter();
             $scope.orderByFilters = repoService.getOrderByFilter();
             $scope.reportData = [];
             $scope.search = function() {
+                if ($scope.searchModel.q === '') {
+                    $mdToast.showSimple('Enter the search word for result...!');
+                    return;
+                }
+
                 repoService.search($scope.searchModel).then(function(response) {
                         $scope.searchModel.pagination.totalItems = response.data.total_count;
                         $scope.searchResult.items = response.data.items;
@@ -97,7 +100,6 @@
                     }
                 };
             }
-
         }
     ]);
 })(window.angular);

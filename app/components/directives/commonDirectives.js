@@ -1,8 +1,7 @@
 (function(angular) {
+    'use strict';
     var commonDirectives = angular.module('Github.CommonDirectives', []);
-
     commonDirectives.directive('gtKeyCode', gtKeyCode);
-    //commonDirectives.directive('gtReport', gtReport);
 
     function gtKeyCode() {
         return {
@@ -20,15 +19,5 @@
             }
         };
     }
-
-    // function gtReport() {
-    //     return {
-    //         restrict: 'E',
-    //         link: function($scope, $element, $attrs) {
-
-    //         }
-    //     };
-
-    // }
 
 })(window.angular);

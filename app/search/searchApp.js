@@ -15,7 +15,7 @@
                 templateUrl: 'search/partials/searchindex.html',
                 controller: 'searchController'
             })
-            .when('/issue', {
+            .when('/issue/:name*', {
                 templateUrl: 'issue/partials/issue-index.html',
                 controller: 'IssueController'
             })

@@ -9,7 +9,6 @@
         'searchControllers',
         'ReportControllers',
         'ngMaterial'
-        //'IssueControllers'
     ]);
 
     githubApp.config(['$locationProvider', '$routeProvider',

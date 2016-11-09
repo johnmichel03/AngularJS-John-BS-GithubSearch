@@ -8,7 +8,7 @@
 
         var logInterceptor = function() {
             $log.log('empty logInterceptor function();');
-        }
+        };
         return logInterceptor;
     }]);
 
@@ -33,7 +33,6 @@
             responseError: function(response) {
 
                 if (response.status !== 200 && response.status !== 404) {
-                    //location.reload();
                     sweetAlert.show('Oops...', response.data.message, 'error');
                 }
                 return $q.reject(response);
@@ -43,4 +42,4 @@
         return responseInterceptor;
     }]);
 
-})(window.angular)
+})(window.angular);

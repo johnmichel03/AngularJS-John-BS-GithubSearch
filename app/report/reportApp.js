@@ -1,6 +1,6 @@
 'use strict';
 
-var reportApp = angular.module('ReportApp', ['ngRoute', 'ReportControllers', 'ngMaterial']);
+var reportApp = angular.module('ReportApp', ['ngRoute', 'ReportControllers']);
 
 reportApp.config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/report', {
