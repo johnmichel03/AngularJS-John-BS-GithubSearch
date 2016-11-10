@@ -78,6 +78,9 @@
                 repoService.search($scope.searchModel).then(function(response) {
                         $scope.searchModel.pagination.totalItems = response.data.total_count;
                         $scope.searchResult.items = response.data.items;
+                        if (response.data.total_count === 0) {
+                            $mdToast.showSimple('No result found...!');
+                        }
                     })
                     .catch(function(ex) {
                         // resetSearchCriteria();
