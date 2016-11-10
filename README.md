@@ -4,7 +4,7 @@
 
 To get you started you can simply clone the this repository and install the dependencies:
 
-### Prerequisites
+### Prerequisites 
 
 You need git to clone the this repository. You can get git from
 [http://git-scm.com/](http://git-scm.com/).
@@ -12,13 +12,13 @@ You need git to clone the this repository. You can get git from
 We also use a number of node.js tools to initialize and test this. You must have node.js and
 its package manager (npm) installed.  You can get them from [http://nodejs.org/](http://nodejs.org/).
 
-### Clone this
+### Clone Angular-John-BS-GithubSearch 
 
-Clone the this repository using [git][git]:
+Clone the Angular-John-BS-GithubSearch repository using [git]:
 
 ```
 git clone https://github.com/johnmichel03/Angular-John-BS-GithubSearch
-cd this
+cd Angular-John-BS-GithubSearch
 ```
 
 If you just want to start a new project without the this commit history then you can do:
@@ -29,7 +29,7 @@ git clone --depth=1 https://github.com/johnmichel03/Angular-John-BS-GithubSearch
 
 The `depth=1` tells git to only pull down one commit worth of historical data.
 
-### Install Dependencies
+### Install Dependencies 
 
 We have two kinds of dependencies in this project: tools and angular framework code.  The tools help
 us manage and test the application.
@@ -53,7 +53,7 @@ folders in your project.
 this changes this location through the `.bowerrc` file.  Putting it in the app folder makes
 it easier to serve the files by a webserver.*
 
-### Run the Application
+### Run the Application 
 
 We have preconfigured the project with a simple development web server.  The simplest way to start
 this server is:
@@ -66,13 +66,20 @@ Now browse to the app at `http://localhost:8000/index.html`.
 
 currently the application point to source app folder ie ./app.
 
-if you want to run the app on build files.
+### Production Build 
 
+'''
 run the npm command 'gulp'
+'''
+
 Modify the package.json file point to build folder ie ./dist/app
 
 example : 
- "start": "http-server -a localhost -p 8002 -c-1 ./dist/app",
+```
+ "start": "http-server -a localhost -p 8000 -c-1 ./dist/app" 
+ ```
 
-NOTE : The test project did not completed and just the test configurations are in place. I will add the unit test and e2e testing later.
+### NOTE 
+
+The test project did not completed and just the test configurations are in place. I will add the unit test and e2e testing later.
 
