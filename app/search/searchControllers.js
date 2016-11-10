@@ -61,14 +61,15 @@
             };
         });
 
-    searchControllers.controller('searchController', ['$scope', 'RepoService', 'sweet', '$mdDialog', '$timeout', '$mdToast',
+    searchControllers.controller('searchController', ['$scope', '$rootScope', 'RepoService', 'sweet', '$mdDialog', '$timeout', '$mdToast',
 
-        function($scope, repoService, sweetAlert, $mdDialog, $timeout, $mdToast) {
+        function($scope, $rootScope, repoService, sweetAlert, $mdDialog, $timeout, $mdToast) {
 
             resetSearchCriteria();
             $scope.sortFilters = repoService.getSortByFilter();
             $scope.orderByFilters = repoService.getOrderByFilter();
             $scope.reportData = [];
+
             $scope.search = function() {
                 if ($scope.searchModel.q === '') {
                     $mdToast.showSimple('Enter the search word for result...!');
@@ -81,6 +82,7 @@
                         if (response.data.total_count === 0) {
                             $mdToast.showSimple('No result found...!');
                         }
+                        $rootScope.searchModel = $scope.searchModel;
                     })
                     .catch(function(ex) {
                         // resetSearchCriteria();
@@ -89,7 +91,6 @@
             };
 
             function resetSearchCriteria() {
-
                 $scope.searchResult = { items: [] };
                 $scope.searchModel = {
                     q: '',
@@ -102,6 +103,11 @@
                         totalItems: 0
                     }
                 };
+            }
+
+            if ($rootScope.searchModel !== undefined && $rootScope.searchModel.q !== '') {
+                $scope.searchModel = $rootScope.searchModel;
+                $scope.search();
             }
         }
     ]);
