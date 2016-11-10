@@ -41,7 +41,7 @@ gulp.task('copy', function() {
     gulp.src('app/issue/**/*.html').pipe(gulp.dest('dist/app/issue'));
 
     /* Copy all the bower components  */
-    gulp.src('bower_components/**/*').pipe(gulp.dest('dist/app/bower_components'));
+    gulp.src('app/bower_components/**/*').pipe(gulp.dest('dist/app/bower_components'));
 });
 
 /* Modify index.html file with min.js file */
