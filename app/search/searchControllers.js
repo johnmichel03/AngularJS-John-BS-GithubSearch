@@ -26,7 +26,7 @@
                             parent: angular.element(document.body),
                             targetEvent: ev,
                             clickOutsideToClose: true,
-                            fullscreen: $scope.customFullscreen, // Only for -xs, -sm breakpoints.
+                            fullscreen: false, // $scope.customFullscreen, // Only for -xs, -sm breakpoints.
                             locals: {
                                 item: $scope.searchResult.items[index]
                             }
